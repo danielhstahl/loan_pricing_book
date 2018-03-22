@@ -1,0 +1,88 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{cite}
+\usepackage{float}
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newenvironment{sketchproof}{%
+  \renewcommand{\proofname}{Sketch of Proof}\proof}{\endproof}
+  
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\section{Introduction}
+
+\section{Introduction to Asset Pricing}
+
+There are three primary academic approaches to asset pricing.  The original approach is founded in utility theory.  This approach is theoretically rigorous but lacks precision.  It is best described as a phenomenological model of asset pricing but is not intended to provide a framework for precisely pricing assets.  However, the other two pricing approaches are consistent with this original approach and owe much to utility theory.  The second approach is the theory Capital Asset Pricing Model approach pioneered by Markowitz, Sharpe, and others.  Markowitz developed a theory around choosing optimal portfolios assuming either quadratic preferences or Gaussian asset returns.  Sharpe created a way to estimate what the expected return of an asset should be based off the correlation with the rest of the market.  This approach is more precise than utility theory but is prone to model error.  It is not easy to generalize the approach.  Again, the approach is primarily a good mental model for asset pricing.  The third approach is the replicating portfolio argument pioneered by Black and Scholes.  This technique is primarily applicable to derivative securities where the price can be determined by other assets.  The approach has proved very precise and rigorous.  It has also proven extensible and general.  
+\\
+\\
+This section is devoted to more detailed descriptions of these three approaches.  The section motivates various ways of thinking about loan pricing.
+
+\subsection{Mathematical preliminaries}
+Before diving in on pricing theory, it is useful to consider the definition and characterization of loans.  Loans involve the providing of money from party A (the lender) to party B (the borrower).  In return, party B pays party A over a (often predefined) set of times.  The terms of the loan typically require the sum of party B's payments to be greater than the original amount of money transferred to party B.  The excess of money that B pays A is called ``interest''.  The annualized percentage of interest relative to the original transfer is called the ``interest rate''.  
+
+\subsubsection{Mathematical formulation}
+Put mathematically, a loan involves an exchange of money \(P_t\) from the lender to the borrower at time \(t\).  The borrower then cumulatively pays the lender \(\int_t ^ \infty c_s ds\) for the original amount \(P_t\).  
+\\
+\\
+Typically, there is some point \(T\) which satisfies \(c_s=0\, \forall\, T<s<\infty\); that is \(T= \sup\{c_s>0 | s>=t\} \).  At this point, the loan is considered to be closed and neither party is beholding to the other.  Having a terminal or maturity date \(T\) allows us to mathematically define the interest rate:
+
+\[r_{t, T}=\frac{\mathrm{log}\left(\frac{\int_t ^ T c_s ds}{P_t}\right)}{ T-t} \]
+
+The goal of this book is to find the ``appropriate'' value for \(r_{t, T}\).
+
+\subsubsection{Risks}
+Loans introduce risk to the lender.  There are two primary risks: interest rate risk and credit risk.  Interest rate risk is the risk that alternative investments may be more attractive at some point \(\tau>t\).  However, there is often no good way to ``undo'' the loan and take advantage of alternative investments.  Credit risk is the risk that the borrower does not pay the agreed upon cash flow; that is, the borrower defaults.  
+\\
+\\
+There are some ways to remediate or immunize these risk.  Interest rate risk can be reduced in several ways.  First, there may be conditions in the loan that allow the lender to ``call'' the loan and require immediate repayment.  These are typically rare.  Second, the loan may have a variable rate.  As market interest rates move, the payment \(c_s\) will change to accommodate.  While this helps reduce interest rate risk, it may increase credit risk since the borrower's ability to service debt may be impaired.   Third, the lender may purchase a swap to offset the interest rate risk.  Purchasing a swap brings another party to the table and may increase credit (or counterparty) risk.  
+\\
+\\
+Credit risk can be reduced by requiring that the borrower post collateral.  In the event of default, the lender will receive the collateral.  There is still credit risk involved with securitized loans.  The collateral could depreciate to be lower than the value of the future contractual cash flows; leading to a loss.  The physical act of taking possession of the collateral may require time and resources.  
+\subsubsection{Modeling Risk}
+The economic definition of risk is uncertainty.  The mathematical model of uncertainty is probability.  To reflect the loan's credit risk, the cash flows from the loan can be written as 
+
+\begin{equation} \label{riskyCashFlows} \int_t ^ T c_s \mathbb{I}_{\tau>s} ds+\mathbb{I}_{\tau<T} k_\tau \end{equation}
+Where \(\mathbb{I}\) is the indicator function, \(\tau\) is the (random) time of default, and \(k\) is the cash flow generated from sale of collateral.  
+
+\subsubsection{Value through time}
+
+The stream of cash flows defined in \ref{riskyCashFlows} has some value at every point \(s \in (t, T)\).  This value is denoted \(V_s\).  While we have not yet developed the toolkit in this book to approach finding the ``appropriate'' value \(V_s\), intuitively it should depend, in some sense, on the cash flows defined in \ref{riskyCashFlows}.  Put mathematically, 
+\[V_s=g\left(   \int_s ^ T c_u \mathbb{I}_{\tau>u} du+\mathbb{I}_{s<\tau<T} k_\tau  \right) \]
+
+The function \(g\) may depend on other variables aside from the cashflows.  The value does not depend on cash flows that have already been paid, which is reflected in the updated lower bound of the integral.  If default has occurred before \(s\) (and collateral has been sold) \(V_s\) should be zero.
+
+
+
+OTHER TOPICS INLUDE OBSERVABILITY OF PRICES
+
+\subsection{Utility theory}
+Utility theory states than a given individual (homo economicus) seeks to maximize a function \(U\) that satisfies the ``usual'' conditions:
+\begin{enumerate}
+\item \(U'(x)>0\)
+\item \(U''(x)<0\)
+\end{enumerate}
+
+In general, utility functions need not be continuous and don't require derivatives to be defined.  Indeed, all that is required for our discussion is that the utility function is concave.  However, since exact results are not required from this approach for our purposes, the useful mental picture is to assume continuity and differentiability.
+\\
+\\
+The above conditions imply non-satiability and risk-aversion.  Risk-aversion is the more important aspect from an asset pricing perspective.  By Jenson's inequality, 
+\[\mathbb{E}[\phi(X)]<=\phi(\mathbb{E}[X])\]
+for concave \(\phi\).  For a risky asset \(Y\), the value placed on the asset by an individual with utility function \(U\) is \(\mathbb{E}[U(Y)]\).  This is less than the utility gained from the expected value of the asset.  The return required by the individual for the asset \(Y\) is higher than a return for a degenerate (non-risky) asset \(Z\).   
+\\
+\\
+Applying this theory to the cash flow equation \ref{riskyCashFlows} the utility gained is
+
+\[\mathbb{E}\left[U\left( \int_t ^ T c_s \mathbb{I}_{\tau>s} ds+\mathbb{I}_{\tau<T} k_\tau \right) \right]\]
+
+With the advent of derivative and option pricing methodologies, 
+
+
+
+
+\end{document}
