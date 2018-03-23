@@ -30,11 +30,16 @@ Before diving in on pricing theory, it is useful to consider the definition and 
 Put mathematically, a loan involves an exchange of money \(P_t\) from the lender to the borrower at time \(t\).  The borrower then cumulatively pays the lender \(\int_t ^ \infty c_s ds\) for the original amount \(P_t\).  
 \\
 \\
-Typically, there is some point \(T\) which satisfies \(c_s=0\, \forall\, T<s<\infty\); that is \(T= \sup\{c_s>0 | s>=t\} \).  At this point, the loan is considered to be closed and neither party is beholding to the other.  Having a terminal or maturity date \(T\) allows us to mathematically define the interest rate:
+Typically, there is some point \(T\) which satisfies \(c_s=0\, \forall\, T<s<\infty\); that is \(T= \sup\{c_s>0 | s>=t\} \).  At this point, the loan is considered to be closed and neither party is beholding to the other.  Having a terminal or maturity date \(T\) allows us to mathematically define the ``continuously compounded'' interest rate:
 
-\[r_{t, T}=\frac{\mathrm{log}\left(\frac{\int_t ^ T c_s ds}{P_t}\right)}{ T-t} \]
+\begin{equation} \label{rateCC} r_{t, T}=\frac{\mathrm{log}\left(\frac{\int_t ^ T c_s ds}{P_t}\right)}{ T-t} \end{equation}
 
-The goal of this book is to find the ``appropriate'' value for \(r_{t, T}\).
+Another commonly quoted interest rate is the ``simple interest rate'':
+\begin{equation} \label{rateS} r_{t, T}=\frac{\frac{\int_t ^ T c_s ds}{P_t}-1}{ T-t} \end{equation}
+
+Depending on the problem, it is sometimes easier to use \ref{rateCC} or \ref{rateS}.  Unless stated otherwise, we will mean \ref{rateCC} when we use the notation \(r_{t, T}\).
+
+Colloquially, the goal of this book is to find the ``appropriate'' value for \(r_{t, T}\).  In reality, this goal will be instead tackled by finding the appropriate values for \(c_s\).  While interest rates are often quoted in the market, interest rates are non-linear functions of the cash flows and can be more difficult to appropriately compute.  Given the ``correct'' value for \(c_s\), it is straightforward to back out an interest rate (whether simple, continuously compounded, or some other compounding).
 
 \subsubsection{Risks}
 Loans introduce risk to the lender.  There are two primary risks: interest rate risk and credit risk.  Interest rate risk is the risk that alternative investments may be more attractive at some point \(\tau>t\).  However, there is often no good way to ``undo'' the loan and take advantage of alternative investments.  Credit risk is the risk that the borrower does not pay the agreed upon cash flow; that is, the borrower defaults.  
@@ -57,9 +62,19 @@ The stream of cash flows defined in \ref{riskyCashFlows} has some value at every
 
 The function \(g\) may depend on other variables aside from the cashflows.  The value does not depend on cash flows that have already been paid, which is reflected in the updated lower bound of the integral.  If default has occurred before \(s\) (and collateral has been sold) \(V_s\) should be zero.
 
+\subsubsection{Risk free asset}
+
+It is often convenient to assume the existence of a risk free asset \(M_t\).  By definition, the risk free asset returns
+\[\frac{dM}{dt}=r_{f, t} M\]
+Solving this ODE yields
+\[M_T=M_t e^{\int_t ^T r_{f, s} ds}\]
+
+Note that \(r_{f, t}\) is allowed to be stochastic.  Default free bonds can be considered derivative securities of this risk free asset.  The only risk in default free bonds (eg, Treasuries) is interest rate risk.  A common asset in this book will be a zero coupon bond which has a single cash flow \(c_T\).  The yields on these default free zero coupon bonds are denoted \(r_{f, t, T}\) and can be computed using \ref{rateDef}.
 
 
-OTHER TOPICS INLUDE OBSERVABILITY OF PRICES
+
+
+
 
 \subsection{Utility theory}
 Utility theory states than a given individual (homo economicus) seeks to maximize a function \(U\) that satisfies the ``usual'' conditions:
@@ -93,13 +108,24 @@ Sharpe used the theory to compute the expected return for a given stock.  To gai
 \end{enumerate}
 
 A portfolio that contains these assets would have zero variance.  A portfolio that has no risk must return the risk free rate in equilibrium.  Using this intuition, any risky asset should return excess of the risk free rate only through its correlation with the rest of the market.  This leads to the celebrated CAPM formula 
-\[\mathbb{E}[r_i]=r_f+\beta_i \left(\mathbb{E][r_m]-r_f)\]
+\[\mathbb{E}[r_{i, t, T}]=r_{f, t, T}+\beta_i \left(\mathbb{E}[r_{m, t, T}]-r_{f, t, T}\right)\]
 The \(\beta\) is the effect that the market has on the expected return on the asset \(i\).  A \(\beta\) of zero corresponds with an expected return of \(r_f\), or the risk free rate.
 \\
 \\
-The primary relevance of CAPM on loan pricing is the concept of diversification.  In a large portfolio of uncorrelated loans and in an efficient market, the interest rate should only compensate for the expected loss of the loan.  The losses of the loan portfolio will have zero variance.  
+The primary relevance of CAPM on loan pricing is the concept of diversification and the dependence of the price of an asset on the existence of other assets.  In a large portfolio of uncorrelated loans and in an efficient market, the interest rate should only compensate for the expected loss of the loan.  
+\\
+\\
+Let the \emph{loss distribution} of a portfolio of \(n\) loans be defined as follows:
 
+\begin{equation}
+\mathbb{P}(L<l)
+\end{equation}
 
+Where \(L=\sum_i X_i \) and \(X_i\) is the random variable describing the risky cash flows of loan \(i\).  As proven in Vasicek (1989), if \(\mathbb{E}[X_iX_j]-\mathbb{E}[X_i]\mathbb{E}[X_j]=0\,\forall\,i,\,j\) then \( \lim_{n \to \infty}\mathbb{V}[L] \to 0\).  By the definition of expectations, the expected gain for \(L\) is simply \(\sum_i \mathbb{E}[X_i]\).  In equilibrium, this expected gain must equal the risk free rate since the portfolio has no risk.  If we further assume that the loans are homogeneous, we can also exactly find the ``correct'' interest rate for each loan as follows:
+
+\[
+\mathbb{E}\left[\int_t ^ T c_s \mathbb{I}_{\tau>s} ds+\mathbb{I}_{\tau<T} k_\tau\right]=e^{r_{f, t, T}(T-t)}
+\]
 
 
 
