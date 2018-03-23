@@ -69,7 +69,7 @@ It is often convenient to assume the existence of a risk free asset \(M_t\).  By
 Solving this ODE yields
 \[M_T=M_t e^{\int_t ^T r_{f, s} ds}\]
 
-Note that \(r_{f, t}\) is allowed to be stochastic.  Default free bonds can be considered derivative securities of this risk free asset.  The only risk in default free bonds (eg, Treasuries) is interest rate risk.  A common asset in this book will be a zero coupon bond which has a single cash flow \(c_T\).  The yields on these default free zero coupon bonds are denoted \(r_{f, t, T}\) and can be computed using \ref{rateDef}.
+Note that \(r_{f, t}\) is allowed to be stochastic.  Default free bonds can be considered derivative securities of this risk free asset.  The only risk in default free bonds (eg, Treasuries) is interest rate risk.  A common asset in this book will be a zero coupon bond which has a single cash flow \(c_T\) denoted \(B(t, T)\).  The yields on these default free zero coupon bonds are denoted \(r_{f, t, T}\) and can be computed using \ref{rateCC}.
 
 
 
@@ -124,7 +124,7 @@ Let the \emph{loss distribution} of a portfolio of \(n\) loans be defined as fol
 Where \(L=\sum_i X_i \) and \(X_i\) is the random variable describing the risky cash flows of loan \(i\).  As proven in Vasicek (1989), if \(\mathbb{E}[X_iX_j]-\mathbb{E}[X_i]\mathbb{E}[X_j]=0\,\forall\,i,\,j\) then \( \lim_{n \to \infty}\mathbb{V}[L] \to 0\).  By the definition of expectations, the expected gain for \(L\) is simply \(\sum_i \mathbb{E}[X_i]\).  In equilibrium, this expected gain must equal the risk free rate since the portfolio has no risk.  If we further assume that the loans are homogeneous, we can also exactly find the ``correct'' interest rate for each loan as follows:
 
 \[
-\mathbb{E}\left[\int_t ^ T c_s \mathbb{I}_{\tau>s} ds+\mathbb{I}_{\tau<T} k_\tau\right]=e^{r_{f, t, T}(T-t)}
+\mathbb{E}\left[\int_t ^ T c_s \mathbb{I}_{\tau>s} ds+\mathbb{I}_{\tau<T} k_\tau\right]=e^{r_{f, t, T}(T-t)}=B(t, T)
 \]
 
 
