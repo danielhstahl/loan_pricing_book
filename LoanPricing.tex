@@ -71,7 +71,7 @@ c_T \mathbb{I}_{\tau>T}+\mathbb{I}_{\tau<T} k_\tau
 \end{equation}
 
 
-\subsubsection{Risk free asset}
+\subsubsection{Risk free asset} \label{rfasset}
 
 It is often convenient to assume the existence of a risk free asset \(M_t\).  By definition, the risk free asset returns
 \[\frac{dM}{dt}=r_{f, t} M\]
@@ -225,13 +225,72 @@ In 1973 Black and Scholes published their seminal paper on derivative pricing.  
 \\
 \\
 Generalizations of this work show that in a complete market, the price of any derivative security can be written as an expectation.  The expectation is not under the ``real world'' probability measure but instead the ``risk-neutral'' probability measure.  
+\subsubsection{Example of Risk Neutral pricing} \label{RNExample}
+There have been many attempts at explaining ``risk-neutral'' pricing intuitively.  In the author's opinion, there is no simple explanation to do risk-neutral pricing justice.  In essence it is a computational trick which allows us to price using expectations.  For example, consider a simple two-state model with a stock, a risk free bond, and a call option on the stock.  The stock is currently at value \(S_0\).  The stock can be at \(S_u>S_0\) or \(S_d<S_0\) in period \(1\).  The bond is currently at value \(M\).  The value is at \(M\) in one period.  The option pays \(C_u=S_u-K\) if the stock goes up or \(C_d=0\) is the stock goes down.  
 \\
 \\
-There have been many attempts at explaining ``risk-neutral'' pricing intuitively.  In the author's opinion, there is no simple explanation to do risk-neutral pricing justice.  In essence it is a computational trick which allows us to price using expectations.  For example, consider a simple stock model and a call option on the stock.  This 
+Consider the following strategy: construct a portfolio \(X_0\) at time \(0\) comprised of \(\Delta\) stock and \(\Gamma\) bonds.  The goal is to find \(\Delta\) and \(\Gamma\) such that at time \(1\), the final value of the portfolio is equal to the option payoff.  The problem can be solved using a simple matrix approach:
 
+\[
+\begin{bmatrix}
+	M & S_u \\
+	M & S_d 
+\end{bmatrix}
+\begin{bmatrix}
+\Gamma \\
+\Delta 
+\end{bmatrix}
+=
+\begin{bmatrix}
+S_u-k \\
+0.0
+\end{bmatrix}
+\]
 
+Using standard matrix algebra and substituting back into the formula for \(X_0\), 
+
+\[X_0=\frac{S_0-S_d}{S_u-S_d}\left(S_u-k\right)\]
+
+Note that \(0<\frac{S_0-S_d}{S_u-S_d}<1\) and can be interpreted as a probability.  Indeed, 
+
+\[X_0=\tilde{p}C_u+(1-\tilde{p})C_d =\mathbb{\tilde{E}}[C]\]
+
+Where \(\tilde{p}=\frac{S_0-S_d}{S_u-S_d}<1\)
+
+Note that this is simply a convenient representation and has very little to do with actual probabilities of stock price movement.  The only relevance that the actual probabilities have is on the initial stock price \(S_0\).  If the actual probability of an ``up'' movement is very small then the initial stock price will likely be much closer to \(S_d\).  This will have a corresponding impact on the risk-neutral probability of an up move.  
+\\
+\\
+By no arbitrage, the price of \(C\) at time \(0\) must be equal to \(X_0\).  Hence we have found the ``correct'' price for \(C\).  
+\subsubsection{Risk-neutral pricing without a replicating portfolio}
+
+The argument from Example \ref{RNExample} is predicated on the ability to replicate the option price with a bond and the stock.  Can a similar representation of an asset hold in the case for assets that cannot be replicated?  There seems to be some hand-wringing about this in the literature.  However, we rely on (F. Delbaen and W. Schachermayer 1998 https://people.math.ethz.ch/~delbaen/ftp/preprints/NLB.pdf) to prove the following general theorem:
+
+\begin{theorem}[First Fundamental Theorem of Asset Pricing] \label{FFTAP}
+	For a multidimensional semimartingale \(S_t\) (representing the ``market''), the following are equivalent:
+	\begin{enumerate}
+		\item There exists a probability measure under which \(S_t\) is a martingale
+		\item The market does not admit \emph{free lunch with vanishing risk}
+	\end{enumerate}
+\end{theorem}
+
+The notion of free lunch with vanishing risk essentially replaces the strong notion of no-arbitrage with the weaker notion of \(\mathcal{L}_2\) convergence.  For our purposes, the weaker notion is sufficient. 
+\\
+\\
+Theorem \ref{FFTAP} does not provide any hints at how to price an instrument.  Indeed, if an asset cannot be replicated then there are theoretically infinite prices for the asset.  However, we follow the convention of using a measure induced by the risk neutral asset.
+
+\subsubsection{Asset pricing without replication}
+
+The price of an asset in this book is assumed to have the following representation:
+
+\[\frac{X_t}{M_t}=\mathbb{\tilde{E}}\left[\frac{h(S_T)}{M_T}|\mathcal{F}_t\right]\]
+Where \(S_T\) is a process that \(X_s\) depends on (eg, the stock in Example \ref{RNExample}) and \(M_t\) is the risk free asset from Section \ref{rfasset}.  Note that this representation implies that \(\frac{X_s}{M_s}\) is a martingale.  
 
 \section{Rule for pricing a loan}
+
+\subsection{Using the risk-neutral measure}
+
+
+
 
 
 \subsection{Putting it all together}
