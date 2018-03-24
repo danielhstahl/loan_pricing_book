@@ -7,6 +7,7 @@
 \usepackage{float}
 \theoremstyle{definition}
 \newtheorem{theorem}{Theorem}
+\newtheorem{goal}{Goal}
 \newenvironment{sketchproof}{%
   \renewcommand{\proofname}{Sketch of Proof}\proof}{\endproof}
   
@@ -16,17 +17,12 @@
 
 \section{Introduction}
 
-\section{Introduction to Asset Pricing}
 
-There are three primary academic approaches to asset pricing.  The original approach is founded in utility theory.  This approach is theoretically rigorous but lacks precision.  It is best described as a phenomenological model of asset pricing but is not intended to provide a framework for precisely pricing assets.  However, the other two pricing approaches are consistent with this original approach and owe much to utility theory.  The second approach is the theory Capital Asset Pricing Model approach pioneered by Markowitz, Sharpe, and others.  Markowitz developed a theory around choosing optimal portfolios assuming either quadratic preferences or Gaussian asset returns.  Sharpe created a way to estimate what the expected return of an asset should be based off the correlation with the rest of the market.  This approach is more precise than utility theory but is prone to model error.  It is not easy to generalize the approach.  Again, the approach is primarily a good mental model for asset pricing.  The third approach is the replicating portfolio argument pioneered by Black and Scholes.  This technique is primarily applicable to derivative securities where the price can be determined by other assets.  The approach has proved very precise and rigorous.  It has also proven extensible and general.  
-\\
-\\
-This section is devoted to more detailed descriptions of these three approaches.  The section motivates various ways of thinking about loan pricing.
 
-\subsection{Mathematical preliminaries}
+\section{Mathematical preliminaries and definitions of loans}
 Before diving in on pricing theory, it is useful to consider the definition and characterization of loans.  Loans involve the providing of money from party A (the lender) to party B (the borrower).  In return, party B pays party A over a (often predefined) set of times.  The terms of the loan typically require the sum of party B's payments to be greater than the original amount of money transferred to party B.  The excess of money that B pays A is called ``interest''.  The annualized percentage of interest relative to the original transfer is called the ``interest rate''.  
 
-\subsubsection{Mathematical formulation}
+\subsection{Mathematical formulation}
 Put mathematically, a loan involves an exchange of money \(P_t\) from the lender to the borrower at time \(t\).  The borrower then cumulatively pays the lender \(\int_t ^ \infty c_s ds\) for the original amount \(P_t\).  
 \\
 \\
@@ -39,9 +35,8 @@ Another commonly quoted interest rate is the ``simple interest rate'':
 
 Depending on the problem, it is sometimes easier to use \ref{rateCC} or \ref{rateS}.  Unless stated otherwise, we will mean \ref{rateCC} when we use the notation \(r_{t, T}\).
 
-Colloquially, the goal of this book is to find the ``appropriate'' value for \(r_{t, T}\).  In reality, this goal will be instead tackled by finding the appropriate values for \(c_s\).  While interest rates are often quoted in the market, interest rates are non-linear functions of the cash flows and can be more difficult to appropriately compute.  Given the ``correct'' value for \(c_s\), it is straightforward to back out an interest rate (whether simple, continuously compounded, or some other compounding).
 
-\subsubsection{Risks}
+\subsection{Risks}
 Loans introduce risk to the lender.  There are two primary risks: interest rate risk and credit risk.  Interest rate risk is the risk that alternative investments may be more attractive at some point \(\tau>t\).  However, there is often no good way to ``undo'' the loan and take advantage of alternative investments.  Credit risk is the risk that the borrower does not pay the agreed upon cash flow; that is, the borrower defaults.  
 \\
 \\
@@ -55,13 +50,6 @@ The economic definition of risk is uncertainty.  The mathematical model of uncer
 \begin{equation} \label{riskyCashFlows} \int_t ^ T c_s \mathbb{I}_{\tau>s} ds+\mathbb{I}_{\tau<T} k_\tau \end{equation}
 Where \(\mathbb{I}\) is the indicator function, \(\tau\) is the (random) time of default, and \(k\) is the cash flow generated from sale of collateral.  
 
-\subsubsection{Value through time}
-
-The stream of cash flows defined in \ref{riskyCashFlows} has some value at every point \(s \in (t, T)\).  This value is denoted \(V_s\).  While we have not yet developed the toolkit in this book to approach finding the ``appropriate'' value \(V_s\), intuitively it should depend, in some sense, on the cash flows defined in \ref{riskyCashFlows}.  Put mathematically, 
-\[V_s=g\left(   \int_s ^ T c_u \mathbb{I}_{\tau>u} du+\mathbb{I}_{s<\tau<T} k_\tau  \right) \]
-
-The function \(g\) may depend on other variables aside from the cashflows.  The value does not depend on cash flows that have already been paid, which is reflected in the updated lower bound of the integral.  If default has occurred before \(s\) (and collateral has been sold) \(V_s\) should be zero.
-
 \subsubsection{Risk free asset}
 
 It is often convenient to assume the existence of a risk free asset \(M_t\).  By definition, the risk free asset returns
@@ -71,10 +59,121 @@ Solving this ODE yields
 
 Note that \(r_{f, t}\) is allowed to be stochastic.  Default free bonds can be considered derivative securities of this risk free asset.  The only risk in default free bonds (eg, Treasuries) is interest rate risk.  A common asset in this book will be a zero coupon bond which has a single cash flow \(c_T\) denoted \(B(t, T)\).  The yields on these default free zero coupon bonds are denoted \(r_{f, t, T}\) and can be computed using \ref{rateCC}.
 
+\subsection{Value through time}
+\label{valOfCashFlows}
+The stream of cash flows defined in \ref{riskyCashFlows} has some value at every point \(s \in (t, T)\).  This value is denoted \(V_s\).  While we have not yet developed the toolkit in this book to approach finding the ``appropriate'' value \(V_s\), intuitively it should depend, in some sense, on the cash flows defined in \ref{riskyCashFlows}.  Put mathematically, 
+\[V_s=g\left(   \int_s ^ T c_u \mathbb{I}_{\tau>u} du+\mathbb{I}_{s<\tau<T} k_\tau  \right) \]
+
+The function \(g\) may depend on other variables aside from the cashflows.  The value does not depend on cash flows that have already been paid, which is reflected in the updated lower bound of the integral.  If default has occurred before \(s\) (and collateral has been sold) \(V_s\) should be zero.
+
+\subsection{Modeling considerations: the loan market}
+
+There are two markets for loans: the primary market where lenders and borrowers agree on terms for exchanging cash flows, and a secondary market where the promised cash flows can be exchanged.  For example, mortgage lenders will agree to terms with home buyers.  Mortgage lenders will then typically sell these loans to Fannie Mae.  Fannie Mae packages these loans and sells them to hedge funds, mutual funds, and other institutional investors.  
+\\
+\\
+A secondary market does not always exist for loans which makes loan pricing both challenging and potentially rewarding. Most asset pricing literature considers that there is a market with prices for most if not all instruments.  This is the fundamental assumption for the models summarized in \ref{assetPricing}.  Indeed, practitioners in capital and equity markets frequently mark their models to market.  They assume a certain model for the market and then use market prices to calibrate the model.  
+\\
+\\
+However, in general the value \(V_s\) from section \ref{valOfCashFlows} is not a price that is viewable in the market.  This can have benefits to the lender.  If the lender believes that a borrower has better credit worthiness than the (primary or secondary) market, the lender can originate a loan at better than cost.  However, if the price is viewable in the market, the lender can make the loan ``available for sale'' (AFS).  This requires the loan to be marked to market.  Even if the lender believes the loan is higher quality, the loan will be booked as if it is lower quality with the requisite capital charge.  If the lender is right, the loan will still provide superior cash flows than expected.  This higher quality won't be reflected in the balance sheet at the time of origination. 
+\\
+\\
+If the loan is not available for sale then the loan is booked at ``par''; that is, the value of the asset is the amount lent \(P_t\).  A simple decision for whether to originate a loan could then be 
+
+\begin{equation}
+\left\{
+\begin{array}{ll}
+\text{originate loan if} & V_t \geq P_t\\
+\text{do not originate otherwise} 
+\end{array} \right.
+\end{equation}
+
+This decision is naive.  First, a loan is required to have additional reserves for expected losses under accounting rules (SEE LATER SECTION).  Second, a loan requires capital to withstand losses that are greater than expected.  Again, this will defined more rigorously in a later section.  
+
+\subsection{Goal of this book}
+
+The goal of this book is introduce methods for finding the ``appropriate'' price of a loan.  Section \ref{valOfCashFlows} introduces the notion that the stream of cash flows \ref{riskyCashFlows} has some value \(V_s\) at every point in time \(s\).  The lender and the borrower agree at origination time \(t\) on the structure of the cash flows.  The implicit goal in section \ref{valOfCashFlows} is that \emph{given} a series of cash flows there is some method of computing the current value of those cash flows.  The goal for the lender at time \(t\) is to find a set of cash flows such that the value \(V_t\) is maximized.  This goal is summarized as follows:
+
+\begin{goal}[Lender's problem] \label{lender1}
+	\[\max_{c_s} V_t\]
+	
+\end{goal}
+
+There are three considerations not explicitly shown in this equation which makes the goal ill-posed.  First and most importantly, the borrower is able to decline the offer.  As \(c_s\) increases, the probability of the borrower declining the offer increases.  The second consideration is that as \(c_s\) increases there is an increase in the probability that \(\tau<T\).  The borrower will have less ability to service the cash flow and is more likely to default.  The third consideration is related to both the first two considerations and to the fact that the borrower has asymmetric information about his or her ability to repay the loan: as \(c_s\) increases, any borrower that does accept the offer is more likely to be a poorer quality customer.  The fact that the borrower chose a higher \(c_s\) indicates that there is little appetite for the borrower's risk in the market.  At a very high level of \(c_s\), the borrower is likely going to take the cash and run with no intention of repayment.  This is especially the case for subprime retail portfolios.  
+\\
+\\
+These three considerations can be captured by considering the market cash flows \(c_{m, s}\).  However, as any loan officer will say, the statement \ref{lender1} is incorrectly stated.  Rather, in a competitive (primary) market, the cash flows \(c_s\) are ``fixed'' for a given level of ``widely available'' measures of risk (say, a level of debt service coverage).  Instead of choosing the cash flow to maximize \ref{valOfCashFlows}, the goal is to find areas where the lender can more accurately assess the probability that \(\tau<T\) and thus undercut the (primary) market.  
+\\
+\\
+There are several mathematical methods for considering this phenomenon.  Perhaps the simplest is to model the ``market'' belief that the time to default random variable is \(\tau_m\) and the lender's belief is that the time to default random variable is \(\tau\).  The lender's problem then becomes the following:
 
 
+\begin{goal}[Lender's problem revisited] \label{lender2}
+	\[
+	\left\{
+	\begin{array}{ll}
+	\text{originate loan if} & V_t\geq V_{t, m}\\
+	\text{do not originate otherwise} 
+	\end{array} \right.
+	\]
+	
+\end{goal}
+
+Where \(V_{t, m}\) is the market's valuation of the expected future cash flows.  This goal has the benefit of being most similar to how lenders typically run their business.  This goal unfortunately is not academically appealing.  As seen in \ref{assetPricing}, models for asset pricing typically assume that the market is correct.  Hence the formulation of \ref{lender2} is nonsensical.  The reason that \ref{lender2} makes some sense is the following:
 
 
+\begin{enumerate}
+	\item The loan market tends to be illiquid; that is, the value \(V_t\) is not a market price but a subjective valuation of the future cash flows.
+	\item Loans that are securitized and made available on the market tend to have high level risk characteristics but may have idiosyncrasies that are only visible to the lender; that is, there is asynchronous information between the lender and the market.  
+	\item The market does not always trust in the competency of lenders.  This can be seen by market prices of securitizations from new lenders.  These securitizations may look the same as from established lenders, but they will typically trade at a lower value simply because there is not as much trust that the lenders have the ability to originate quality loans.  
+	
+\end{enumerate}
+
+Other shortcomings with \ref{lender2} is that it assumes the capital structure and loan mix is identical between the market and the lender.  
+
+\subsection{Putting it all together}
+
+NOTE Consider moving this to later in the book
+
+There are now four formulas or values.  These are
+
+\begin{enumerate}
+	\item \(V_t\): the modeled (subjective) value of the loan to the lender
+	\item \(V_{t, min}\): the modeled (subjective) minimum value of the loan to the lender
+	\item \(V_{t, m}\): the (directly unobservable) value of the loan in the primary market
+	\item \(S_t\): the (potentially unobservable) price of the loan in the secondary market
+	
+\end{enumerate}
+
+The lending decision should be:
+
+
+\begin{goal}[Lender's final problem] \label{lender3}
+	\[
+	\left\{
+	\begin{array}{ll}
+	\text{originate loan if} & V_t \geq V_{t, min}\\
+	\text{do not originate otherwise} 
+	\end{array} \right.
+	\]
+	
+\end{goal}
+
+The primary and secondary market values do not directly impact the origination decision.  However, these values should be tracked over a broad set of originations.  For example, consider the following scenarios:
+
+\begin{enumerate}
+	\item ``Good'' scenario:  \(V_t<S_t\) or \(V_t<V_{t, m}\).  If the lender's subjective valuation is consistently lower than the market's, the lender's capital is either better suited (or more diversified) for the loans that the lender originates or the lender's models are better (or worse!) than the market's.  The performance of the model can be tracked temperately.  If the model performance is adequate, then consistently undercutting the  market is a good thing.  
+	\item ``Bad'' scenario: \(V_{t, min}>S_t\) or \(V_{t, min}>V_{t, m}\).  The lender is inappropriately deploying capital or has a significant model problem.  The lender may need to consider other lending products.  
+\end{enumerate}
+
+These values can be tracked in a number of ways.  The primary market valuation for a loan can be assessed through an ongoing study of percentage of applications are funded and through random price testing.  The secondary market price can only be tracked for those loans that are publicly tradeable.  Secondary market loans may have less information about the borrower than is known by the lender which may influence the price.  
+
+
+\section{Introduction to Asset Pricing} \label{assetPricing}
+
+There are three primary academic approaches to asset pricing.  The original approach is founded in utility theory.  This approach is theoretically rigorous but lacks precision.  It is best described as a phenomenological model of asset pricing but is not intended to provide a framework for precisely pricing assets.  However, the other two pricing approaches are consistent with this original approach and owe much to utility theory.  The second approach is the theory Capital Asset Pricing Model approach pioneered by Markowitz, Sharpe, and others.  Markowitz developed a theory around choosing optimal portfolios assuming either quadratic preferences or Gaussian asset returns.  Sharpe created a way to estimate what the expected return of an asset should be based off the correlation with the rest of the market.  This approach is more precise than utility theory but is prone to model error.  It is not easy to generalize the approach.  Again, the approach is primarily a good mental model for asset pricing.  The third approach is the replicating portfolio argument pioneered by Black and Scholes.  This technique is primarily applicable to derivative securities where the price can be determined by other assets.  The approach has proved very precise and rigorous.  It has also proven extensible and general.  
+\\
+\\
+This section is devoted to more detailed descriptions of these three approaches.  The section motivates various ways of thinking about loan pricing.
 
 \subsection{Utility theory}
 Utility theory states than a given individual (homo economicus) seeks to maximize a function \(U\) that satisfies the ``usual'' conditions:
@@ -128,7 +227,7 @@ Where \(L=\sum_i X_i \) and \(X_i\) is the random variable describing the risky 
 \]
 
 
-
+[TODO!!!! Need to show that solving the interest rate for a single coupon is sufficient.  No need to consider more than cash flow]
 
 
 
