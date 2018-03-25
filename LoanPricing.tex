@@ -97,7 +97,7 @@ Unless \(g\) is linear, there is no obvious method for computing \(V_s\) as a fu
 
 
 \subsection{Modeling considerations: the loan market}
-
+\label{loanMarket}
 There are two markets for loans: the primary market where lenders and borrowers agree on terms for exchanging cash flows, and a secondary market where the promised cash flows can be exchanged.  For example, mortgage lenders will agree to terms with home buyers.  Mortgage lenders will then typically sell these loans to Fannie Mae.  Fannie Mae packages these loans and sells them to hedge funds, mutual funds, and other institutional investors.  
 \\
 \\
@@ -255,9 +255,7 @@ Note that \(0<\frac{S_0-S_d}{S_u-S_d}<1\) and can be interpreted as a probabilit
 
 \[X_0=\tilde{p}C_u+(1-\tilde{p})C_d =\mathbb{\tilde{E}}[C]\]
 
-Where \(\tilde{p}=\frac{S_0-S_d}{S_u-S_d}<1\)
-
-Note that this is simply a convenient representation and has very little to do with actual probabilities of stock price movement.  The only relevance that the actual probabilities have is on the initial stock price \(S_0\).  If the actual probability of an ``up'' movement is very small then the initial stock price will likely be much closer to \(S_d\).  This will have a corresponding impact on the risk-neutral probability of an up move.  
+Where \(\tilde{p}=\frac{S_0-S_d}{S_u-S_d}<1\).  Note that this is simply a convenient representation and has very little to do with actual probabilities of stock price movement.  The only relevance that the actual probabilities have is on the initial stock price \(S_0\).  If the actual probability of an ``up'' movement is very small then the initial stock price will likely be much closer to \(S_d\).  This will have a corresponding impact on the risk-neutral probability of an up move.  
 \\
 \\
 By no arbitrage, the price of \(C\) at time \(0\) must be equal to \(X_0\).  Hence we have found the ``correct'' price for \(C\).  
@@ -289,9 +287,19 @@ Where \(S_T\) is a process that \(X_s\) depends on (eg, the stock in Example \re
 
 \subsection{Using the risk-neutral measure}
 
+\subsubsection{Zero-coupon bond}
+The price of a zero-coupon bond with no credit risk is the following:
 
+\[B(t, T)=\mathbb{\tilde{E}}\left[\frac{M_t}{M_T}|\mathcal{F}_t\right]\]
+\[=\mathbb{\tilde{E}}\left[e^{-\int_t ^ T r_s ds}|\mathcal{F}_t\right]\]
 
+There are a variety of models for the instantaneous interest rate for which there are closed form solutions for \(B(t, T)\).  
 
+\subsubsection{Basic loan with potential for default}
+Consider a simple model with the risk-free asset having no return (risk free rate of zero). There is a loan that has a \(3\%\) probability of default before maturing in a year.  There is no recovery at default.  The expected value of the loan is \(0.97\).  However, the price of the loan will be less than \(0.97\) to compensate for the risk of the loan.  The risk-neutral probability of default is very simple to back out of the price: \(\hat{p}=1-S_t\) where \(\hat{p}\) is the risk-neutral probability of default and \(S_t\) is the price of the loan.  However, as mentioned in \ref{loanMarket}, there often is not a secondary market for loans.  
+\\
+\\
+TALK ABOUT HOW EC COMPENSATES FOR RISK_NEUTRAL
 
 \subsection{Putting it all together}
 
