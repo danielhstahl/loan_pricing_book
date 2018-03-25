@@ -5,6 +5,8 @@
 \usepackage{amsfonts}
 \usepackage{cite}
 \usepackage{float}
+\usepackage{scrextend}
+\usepackage{hyperref}
 \theoremstyle{definition}
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}
@@ -299,7 +301,62 @@ There are a variety of models for the instantaneous interest rate for which ther
 Consider a simple model with the risk-free asset having no return (risk free rate of zero). There is a loan that has a \(3\%\) probability of default before maturing in a year.  There is no recovery at default.  The expected value of the loan is \(0.97\).  However, the price of the loan will be less than \(0.97\) to compensate for the risk of the loan.  The risk-neutral probability of default is very simple to back out of the price: \(\hat{p}=1-S_t\) where \(\hat{p}\) is the risk-neutral probability of default and \(S_t\) is the price of the loan.  However, as mentioned in \ref{loanMarket}, there often is not a secondary market for loans.  
 \\
 \\
-TALK ABOUT HOW EC COMPENSATES FOR RISK_NEUTRAL
+TALK ABOUT HOW EC COMPENSATES FOR RISK NEUTRAL
+\subsection{Digression into optimal capital structure theory}
+Firms finance their assets with debt or equity.  A common way to express this leverage (the amount of debt) is by the ratio of debt to equity (denoted henceforth as \(\alpha\)).  There has been a substantial history of literature dedicated to finding an ``optimal'' capital structure.  
+\subsubsection{Modigliani and Miller}
+Modigliani and Miller's (M\&M) \href{https://gvpesquisa.fgv.br/sites/gvpesquisa.fgv.br/files/arquivos/terra_-_the_cost_of_capital_corporation_finance.pdf}{paper} made the bold statement that firm value is not dependent on the leverage of an institution.  The corollary is that the expected return on equity is
+\[q=\rho+(\rho-r_f)\alpha\]
+Where \(q\) is the expected return on equity, \(\rho\) is the un-levered return, \(r_f\) is the usual risk free rate, and \(\alpha\) is the ratio of debt to equity.  The crux of the proof is that, under certain restrictive assumptions, investors can replicate leverage by participating in the debt markets.  These assumptions include the following:
+\begin{enumerate}
+	\item Zero credit risk
+	\item Efficient debt markets (same access to funding for all investors)
+\end{enumerate}
+
+While the theory is an interesting academic exercise, the assumptions are extremely restrictive. However, is remains a good mental model but not for the reasons originally provided by M\&M.  As debt increases, the firm becomes more risky.  Investors require additional return on their equity to compensate for this risk.  M\&M assumed no default risk so that the risk induced by leverage is non-existent.  
+
+\subsubsection{Extensions of M\&M}
+Many of the assumptions around M\&M have been relaxed including efficient debt markets.  For example, DeMarzo's \href{https://www.gsb.stanford.edu/sites/gsb/files/publication-pdf/MM%20with%20Incomplete%20Markets%20JET%2088.pdf}{paper} shows that capital structure is irrelevant in a general equilibrium, multi-state, stochastic scenario.  However, DeMarzo still does not consider default (the model has no credit risk).
+
+\subsubsection{Admati et al}
+
+The theory has seen additional support recently with the \href{https://www.coll.mpg.de/pdf_dat/2010_42online.pdf}{paper} by Admati et al.  Admati et al argue that banks should be required to have substantial equity.  The costs, they argue, are small since firm value is not dependent on capital structure.  
+\\
+\\
+The paper by Admati et al has several flaws.  First, consider a naive application of M\&M to a bank's required return on equity.  Under the assumptions of M\&M, the un-levered return of a bank is simply the risk free rate (recall there is no default in their model).  Hence the required return on equity for a bank is as follows:
+\[q=r_f+(r_f-r_f)\alpha=r_f\]
+
+In other words, the required return is the risk free rate regardless of the capital structure.  To resolve this seeming paradox, it suffices to note that under the assumptions of M\&M, banks do not exist: the debt market is efficient and has complete information.  Banks have no role as intermediaries. 
+\\
+\\
+Another flaw in Admati et al is that they mis-represent the cause of bank defaults.  Banks do not default because of lack of equity but because of lack of liquidity.  Admati et al correctly point out that reserve requirements and capital requirements are separate considerations.  However, they spend the entire paper arguing that capital requirements are important instead of reserve requirements.  
+\\
+\\
+The final flaw is that while they admit that debt-holders are ambivalent to the risk of firm because of government FDIC insurance, the obvious solution that is never broached is to simply remove the FDIC insurance.  This insurance simultaneously provides banks with cheap funding and little incentive to hold capital.  It also acts as a barrier to entry for non-banks.  Removing it would force banks to become less levered.  It would force banks to hold more reserves.  
+\\
+\\
+One final remark about Admati et al.  They make the following statement regarding M\&M versus other models:
+\\
+\\
+\begin{addmargin}[2em]{2em}
+The assumptions underlying the Modigliani-Miller analysis are in fact the very same assumptions underlying the quantitative models that  banks  use  to  manage  their risks, in particular, the risks in their trading books. Anyone who questions the empirical validity and relevance of an analysis that is based on these assumptions is implicitly questioning the reliability of these quantitative models and their adequacy for the uses to which they are put – including that of determining required capital under the model-based approach for market risk.
+\\
+\\
+\end{addmargin}
+
+This statement is a gross mis-characterization of market models.  First, market models used by banks use the much more precise and rigorous foundation of risk-neutral pricing rather than the more descriptive equilibrium models of M\&M.  Secondly, market models are marked-to-market: these models are not necessarily intended to be accurate in and of themselves, but instead transform market signals into more stable metrics (for example, implied volatility).  Third, certain models are more robust to their assumptions than others.  Even if M\&M shared similar assumptions to market models, M\&M is clearly less robust to these assumptions than market models.  In a rather ironic twist, the acceptance of market models by the market speaks to the utility of these models over models like M\&M.  
+
+\subsubsection{DeAngelo and Stultz}
+
+On the other side of the debate is DeAngelo and Stultz's \href{https://fic.wharton.upenn.edu/wp-content/uploads/2016/11/13-20.pdf}{paper} on optimal bank leverage.  Their paper discusses various relaxations of the M\&M assumptions.  First, they consider relaxations of M\&M such that banks can exist while still retaining the M\&M result.  Second, they consider liquidity generation to be a primary banking function.  The first point is relevant to our discussion on loan pricing.  The second is relevant for finding socially optimal capital structures.  However, it less relevant for pricing individual loans.
+
+
+\subsubsection{Capital structure as option pricing}
+
+While the debates around M\&M are fun to read and participate in, the results are not precise or general enough for our purposes.  We need something which incorporates the probability of default; both in the riskiness of the assets of a lender and of the lender itself.  
+
+Merton wrote a \href{http://www.people.hbs.edu/rmerton/Pricing%20of%20corporate%20debt.pdf}{paper} showing that equity is similar to a long call option an a firm's assets while debt is similar to a short put option on a firm's assets.  
+
 
 \subsection{Putting it all together}
 

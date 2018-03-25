@@ -1,0 +1,26 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Mathematical preliminaries and definitions of loans}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Mathematical formulation}{section.2}% 3
+\BOOKMARK [3][-]{subsubsection.2.1.1}{A digression into yield and interest rate}{subsection.2.1}% 4
+\BOOKMARK [2][-]{subsection.2.2}{Risks}{section.2}% 5
+\BOOKMARK [3][-]{subsubsection.2.2.1}{Modeling Risk}{subsection.2.2}% 6
+\BOOKMARK [3][-]{subsubsection.2.2.2}{Risk free asset}{subsection.2.2}% 7
+\BOOKMARK [2][-]{subsection.2.3}{Value through time}{section.2}% 8
+\BOOKMARK [2][-]{subsection.2.4}{Modeling considerations: the loan market}{section.2}% 9
+\BOOKMARK [2][-]{subsection.2.5}{Goal of this book}{section.2}% 10
+\BOOKMARK [1][-]{section.3}{Introduction to Asset Pricing}{}% 11
+\BOOKMARK [2][-]{subsection.3.1}{Utility theory}{section.3}% 12
+\BOOKMARK [2][-]{subsection.3.2}{Modern Portfolio Theory and CAPM}{section.3}% 13
+\BOOKMARK [2][-]{subsection.3.3}{Black Scholes and Risk Neutral pricing}{section.3}% 14
+\BOOKMARK [3][-]{subsubsection.3.3.1}{Example of Risk Neutral pricing}{subsection.3.3}% 15
+\BOOKMARK [3][-]{subsubsection.3.3.2}{Risk-neutral pricing without a replicating portfolio}{subsection.3.3}% 16
+\BOOKMARK [3][-]{subsubsection.3.3.3}{Asset pricing without replication}{subsection.3.3}% 17
+\BOOKMARK [1][-]{section.4}{Rule for pricing a loan}{}% 18
+\BOOKMARK [2][-]{subsection.4.1}{Using the risk-neutral measure}{section.4}% 19
+\BOOKMARK [3][-]{subsubsection.4.1.1}{Zero-coupon bond}{subsection.4.1}% 20
+\BOOKMARK [3][-]{subsubsection.4.1.2}{Basic loan with potential for default}{subsection.4.1}% 21
+\BOOKMARK [2][-]{subsection.4.2}{Digression into optimal capital structure theory}{section.4}% 22
+\BOOKMARK [3][-]{subsubsection.4.2.1}{Modigliani and Miller}{subsection.4.2}% 23
+\BOOKMARK [3][-]{subsubsection.4.2.2}{Extensions of M\046M}{subsection.4.2}% 24
+\BOOKMARK [3][-]{subsubsection.4.2.3}{Admati et al}{subsection.4.2}% 25
+\BOOKMARK [2][-]{subsection.4.3}{Putting it all together}{section.4}% 26
