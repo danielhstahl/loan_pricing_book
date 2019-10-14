@@ -7,6 +7,8 @@
 \usepackage{float}
 \usepackage{scrextend}
 \usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
 \theoremstyle{definition}
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}
@@ -365,11 +367,23 @@ Since the differentiating firm will choose the rate to charge based off the choi
 
 In the charts below, \(\alpha=2\), \(\beta=48\), required return for capital is 4\%, yielding an equilibrium rate of \(1/12 \approx 0.0833\).
 
-\includegraphics{LoanPricing-002}
 
 
-\includegraphics{LoanPricing-003}
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+ \includegraphics[width=0.5\linewidth]{LoanPricing-fig1plot}
 
+  
+  \caption{Profit for each firm for varying rates}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.5\linewidth]{LoanPricing-fig2plot}
+  \caption{Market share for non-differentiated firm}
+\end{subfigure}
+\end{figure}
 
 As expected, the differentiator dominates the market.  The only hope for the non-differentiator is to charge an extremely high price and try to get the very worst of the loans.  Of course, the non-differentiator is still not profitable and has essentially no market share even in the best case scenario.  
 \\

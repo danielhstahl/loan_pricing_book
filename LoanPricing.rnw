@@ -7,6 +7,8 @@
 \usepackage{float}
 \usepackage{scrextend}
 \usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
 \theoremstyle{definition}
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}
@@ -367,8 +369,7 @@ Since the differentiating firm will choose the rate to charge based off the choi
 
 In the charts below, \(\alpha=2\), \(\beta=48\), required return for capital is 4\%, yielding an equilibrium rate of \(1/12 \approx 0.0833\).
 
-<<fig=T, echo=FALSE>>=
-## 4% average default rate
+<<label=fig1plot, fig=TRUE, echo=FALSE, include=FALSE >>=
 alpha=2
 beta=48
 capital=0.04
@@ -377,7 +378,7 @@ differentiated_profits=get_profit_differentiated(rates, alpha, beta, capital)
 undifferentiated_profits=get_profit_undifferentiated(rates, alpha, beta, capital)
 plot(
   rates, differentiated_profits, type='l', 
-  ylim=c(-0.05, 0.15), col='blue', 
+  ylim=c(-0.01, 0.15), col='blue', 
   xlab='Non-differentiated Rate', ylab='Profits'
 )
 lines(rates, undifferentiated_profits, col='red')
@@ -385,9 +386,7 @@ lines(rates, capital*(c(1:length(rates))*0+1), col='green')
 lines(get_r(alpha, beta, capital)*c(1, 1), c(-0.05, 0.15), col='yellow')
 @
 
-
-<<fig=T, echo=FALSE>>=
-## 4% average default rate
+<<label=fig2plot, fig=TRUE, echo=FALSE, include=FALSE>>=
 alpha=2
 beta=48
 capital=0.04
@@ -396,11 +395,26 @@ percentMarket=1-get_percent_differentiated(rates, alpha, beta, capital)
 plot(
   rates, percentMarket, type='l', 
   col='blue', xlab='Non-differentiated Rate', 
-  ylab='Market share for Non-differentiated firm'
+  ylab='Market share'
 )
 lines(get_r(alpha, beta, capital)*c(1, 1), c(0, 1), col='yellow')
 @
 
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+ \includegraphics[width=0.5\linewidth]{LoanPricing-fig1plot}
+
+  
+  \caption{Profit for each firm for varying rates}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.5\linewidth]{LoanPricing-fig2plot}
+  \caption{Market share for non-differentiated firm}
+\end{subfigure}
+\end{figure}
 
 As expected, the differentiator dominates the market.  The only hope for the non-differentiator is to charge an extremely high price and try to get the very worst of the loans.  Of course, the non-differentiator is still not profitable and has essentially no market share even in the best case scenario.  
 \\
