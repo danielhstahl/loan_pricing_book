@@ -1,3 +1,7 @@
 *.aux
 *.gz
 *.log
+*00*.pdf
+*.fls
+*concordance.tex
+*.fdb_latexmk
