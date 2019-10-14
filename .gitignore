@@ -5,3 +5,4 @@
 *.fls
 *concordance.tex
 *.fdb_latexmk
+*.out

@@ -365,7 +365,7 @@ By standard properties of the Beta distribution, these equations can be simplifi
 
 Since the differentiating firm will choose the rate to charge based off the choice of rate by the non-differentiating firm, it is interesting to view charts of the profit and market share for each firm for varying levels of \(r\).
 
-In the charts below, \(\alpha=2\), \(\beta=48\), required return for capital is 4\%.
+In the charts below, \(\alpha=2\), \(\beta=48\), required return for capital is 4\%, yielding an equilibrium rate of \(1/12 \approx 0.0833\).
 
 <<fig=T, echo=FALSE>>=
 ## 4% average default rate
@@ -382,6 +382,7 @@ plot(
 )
 lines(rates, undifferentiated_profits, col='red')
 lines(rates, capital*(c(1:length(rates))*0+1), col='green')
+lines(get_r(alpha, beta, capital)*c(1, 1), c(-0.05, 0.15), col='yellow')
 @
 
 
@@ -397,6 +398,7 @@ plot(
   col='blue', xlab='Non-differentiated Rate', 
   ylab='Market share for Non-differentiated firm'
 )
+lines(get_r(alpha, beta, capital)*c(1, 1), c(0, 1), col='yellow')
 @
 
 
@@ -407,7 +409,7 @@ The message to this toy example is clear: better differentation of customers can
 
 \subsection{One firm differentiates and has higher capital costs}
 
-A more interesting scenario is where one where the differentiating firm faces higher capital costs than the non-differentiating firm.  This is similar to a market where a Fintech may have better modeling and additional sources of data for originating loans, but has higher capital costs due to the youth of the business and the lack of diversification of its assets.  
+A more interesting scenario is where one where the differentiating firm faces higher capital costs than the non-differentiating firm.  This is similar to a market where a Fintech may have better modeling and additional sources of data for originating loans than traditional retail banks, but has higher capital costs due to the youth of the business and the lack of diversification of its assets.  
 
 In the charts below, \(\alpha=2\), \(\beta=48\), required return for capital for the differentiatior is 8\%, and the required return for capital of the non-differentiatior is 4\%.  
 
@@ -428,6 +430,7 @@ plot(
 )
 lines(rates, undifferentiated_profits, col='red')
 lines(rates, capital_non_differentiatior*(c(1:length(rates))*0+1), col='green')
+lines(get_r(alpha, beta, capital_differentiatior)*c(1, 1), c(-0.05, 0.15), col='yellow')
 @
 
 <<fig=T, echo=FALSE>>=
@@ -443,6 +446,7 @@ plot(
   col='blue', xlab='Non-differentiated Rate', 
   ylab='Market share for Non-differentiated firm'
 )
+lines(get_r(alpha, beta, capital_non_differentiatior)*c(1, 1), c(0, 1), col='yellow')
 @
 
 Now both firms are profitable.  Excess profits for each firm are shown below:
@@ -462,6 +466,7 @@ plot(
   xlab='Non-differentiated Rate', ylab='Excess Profits'
 )
 lines(rates, undifferentiated_profits-capital_non_differentiatior, col='red')
+lines(get_r(alpha, beta, capital_non_differentiatior)*c(1, 1), c(-0.05, 0.15), col='yellow')
 @
 
 
