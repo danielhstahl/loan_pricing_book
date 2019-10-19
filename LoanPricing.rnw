@@ -308,7 +308,7 @@ And now for something completely different!  So far I have have talked about gen
 <<echo=FALSE>>=
 source("./utils.R")
 @
-I assume a market with default rates distributed as a Beta distribution, with parameters \(\alpha,\,\beta\).  There are two firms in this market, each providing funds to borrowers.  I assume that there are no operational costs and that each firm requires compensation only for capital charges and expected losses.  To further simplify the analysis, the capital charges are inputs into the model; making this model a partial equilibrium model.  The capital charges are also fixed for every loan made.  This assumption may be appropriate for markets where the loans have fixed regulatory capital charges (eg, home equity loans have a fixed 100\% regulatory capital charge).  Both firms choose the interest rates charged in order to maximize profits.  Note that none of these assumptions is particularly prohibitive and are made to ease the analysis.  Endogenous capital charges are extremely difficult to accurately model and most firms estimate capital charges from internal assessment of credit quality and not from a general-equilibrium model.  
+I assume a market with default rates distributed as a Beta distribution, with parameters \(\alpha,\,\beta\).  There are two firms in this market, each providing funds to borrowers.  I assume that there are no operational costs and that each firm requires compensation only for capital charges and expected losses.  To further simplify the analysis, the capital charges are inputs into the model; making this model a partial equilibrium model.  The capital charges are also fixed for every loan made.  This assumption may be appropriate for markets where the loans have fixed regulatory capital charges (eg, home equity loans have a fixed 100\% regulatory capital charge).  Both firms choose the interest rates charged in order to maximize profits.  Note that none of these assumptions is particularly prohibitive and are made to ease the analysis.  Endogenous capital charges are extremely difficult to accurately model and most firms estimate capital charges from internal assessment of credit quality and not from a general-equilibrium model.  Additionally, I assume infinitely liquid markets: at every price there will be agents willing to borrow.  This is a reasonable approximation for smaller firms operating in a large market.  
 
 \subsection{Neither firm differentiates, both firms are identical}
 
@@ -366,7 +366,8 @@ By standard properties of the Beta distribution, these equations can be simplifi
 
 
 Since the differentiating firm will choose the rate to charge based off the choice of rate by the non-differentiating firm, it is interesting to view charts of the profit and market share for each firm for varying levels of \(r\).
-
+\\
+\\
 In the charts below, \(\alpha=2\), \(\beta=48\), required return for capital is 4\%, yielding an equilibrium rate of \(1/12 \approx 0.0833\).
 
 <<label=fig1plot, fig=TRUE, echo=FALSE, include=FALSE >>=
@@ -400,7 +401,7 @@ plot(
 lines(get_r(alpha, beta, capital)*c(1, 1), c(0, 1), col='yellow')
 @
 
-\begin{figure}
+\begin{figure}[!htb]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
@@ -412,7 +413,7 @@ lines(get_r(alpha, beta, capital)*c(1, 1), c(0, 1), col='yellow')
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=0.5\linewidth]{LoanPricing-fig2plot}
-  \caption{Market share for non-differentiated firm}
+  \caption{Percentage of winning offers for non-differentiated firm}
 \end{subfigure}
 \end{figure}
 
@@ -428,7 +429,7 @@ A more interesting scenario is where one where the differentiating firm faces hi
 In the charts below, \(\alpha=2\), \(\beta=48\), required return for capital for the differentiatior is 8\%, and the required return for capital of the non-differentiatior is 4\%.  
 
 
-<<fig=T, echo=FALSE>>=
+<<label=fig3plot, fig=T, echo=FALSE, include=FALSE>>=
 ## 4% average default rate
 alpha=2
 beta=48
@@ -444,10 +445,10 @@ plot(
 )
 lines(rates, undifferentiated_profits, col='red')
 lines(rates, capital_non_differentiatior*(c(1:length(rates))*0+1), col='green')
-lines(get_r(alpha, beta, capital_differentiatior)*c(1, 1), c(-0.05, 0.15), col='yellow')
+lines(get_r(alpha, beta, capital_non_differentiatior)*c(1, 1), c(-0.05, 0.15), col='yellow')
 @
 
-<<fig=T, echo=FALSE>>=
+<<label=fig4plot, fig=T, echo=FALSE, include=FALSE>>=
 ## 4% average default rate
 alpha=2
 beta=48
@@ -462,6 +463,22 @@ plot(
 )
 lines(get_r(alpha, beta, capital_non_differentiatior)*c(1, 1), c(0, 1), col='yellow')
 @
+
+\begin{figure}[!htb]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+ \includegraphics[width=0.5\linewidth]{LoanPricing-fig3plot}
+
+  
+  \caption{Profit for each firm for varying rates}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.5\linewidth]{LoanPricing-fig4plot}
+  \caption{Percentage of winning offers for non-differentiated firm}
+\end{subfigure}
+\end{figure}
 
 Now both firms are profitable.  Excess profits for each firm are shown below:
 
@@ -482,6 +499,36 @@ plot(
 lines(rates, undifferentiated_profits-capital_non_differentiatior, col='red')
 lines(get_r(alpha, beta, capital_non_differentiatior)*c(1, 1), c(-0.05, 0.15), col='yellow')
 @
+
+\subsection{Demand function}
+
+I now relax the assumption of infinite liquidity.  I use a simple demand function with the following functional form:
+
+\[D(r, x; a, b)=1-ar+bx\]
+
+This demand function's slope is shifted by the default rate.  The rationale is that for higher default probabilities, demand will stay high across rates.  This is due to the fact that higher probability default agents are likely to be more desperate for funding or be at higher risk of fraudulently defaulting. 
+\\
+\\
+The profit for a monopolistic firm with differentiating capability but who can only charge a single rate is mathematically:
+
+\[\pi_1(r)=\int_0 ^1 (1-ar+bx)\left((1+r)(1-x)-1\right)f(x)dx\]
+
+Using properties of the Beta distribution, this results in:
+
+\[\pi_1(r)=\frac{(1+r)(1-ar)\beta}{\alpha+\beta}+ar-1-\frac{b\alpha}{\alpha+\beta}\left(\frac{1+\alpha}{\alpha+\beta+1}\right)\]
+
+The \(r\) that maximizes this profit is 
+
+\[r=\frac{a(\alpha+\beta)}{2\beta a}+\frac{1-a}{2a}\]
+
+
+
+
+
+
+
+
+
 
 
 
