@@ -9,3 +9,8 @@ Book on loan pricing.  Tentative outline:
     * CECL
     * RWA
     * CCAR
+
+
+See also https://github.com/phillyfan1138/LoanPricingPaper
+
+I've not had good luck with putting loan pricing on a sound theoretical basis.  This may be because in an idealized market intermediaries such as financial institutions don't exist.
